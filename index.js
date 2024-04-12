@@ -5,12 +5,13 @@ function onSubmit(resolve) {
             type: 'rich', // do not change
             title: 'New app!', ///Here would be the title
             color: 00000, //Here would be the color the default is black
-            fields: [], //Leave this alone
-        }]
+            description: `A new form resonse has just been sumbited. Below are the answers to the questions you have on the google form.`
+        }],
+        content: `<%role-id-here> A new form was sumbbited`
     }
     resolve.response.getItemResponses().forEach(function(comeback) {
         let val = comeback.getResponse() || 'None'
-        discord_embed.embeds[0].fields.push({ name: comeback.getItem().getTitle(), value: val })
+        discord_embed.embeds[0].description +=  `\n**${comeback.getItem().getTitle()}**\`\`\`\n${val}\`\`\``
     })
     UrlFetchApp.fetch(discord_webhook, {
         method: 'post',
